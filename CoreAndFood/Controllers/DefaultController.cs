@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CoreAndFood.Controllers
 {
+	[AllowAnonymous]
 	public class DefaultController : Controller
 	{
 		IFoodRepository _foodRepository;
@@ -14,8 +15,6 @@ namespace CoreAndFood.Controllers
 			_foodRepository = foodRepository;
 			_categoryRepository = categoryRepository;
 		}
-
-		[AllowAnonymous]
 		public IActionResult Index()
 		{
 			return View();

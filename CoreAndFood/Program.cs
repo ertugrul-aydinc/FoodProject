@@ -1,3 +1,4 @@
+using CoreAndFood.Extensions;
 using CoreAndFood.Repositories;
 using CoreAndFood.Repositories.Abstract;
 using FluentValidation.AspNetCore;
@@ -16,8 +17,10 @@ builder.Services.AddMvc(config =>
 	config.Filters.Add(new AuthorizeFilter(policy));
 });
 
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<IFoodRepository, FoodRepository>();
+//builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+//builder.Services.AddScoped<IFoodRepository, FoodRepository>();
+
+builder.Services.AddDependencyResolvers();
 
 
 
@@ -54,6 +57,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
 	name: "default",
-	pattern: "{controller=Home}/{action=Index}/{id?}");
+	pattern: "{controller=Default}/{action=Index}/{id?}");
 
 app.Run();
