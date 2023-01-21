@@ -1,0 +1,48 @@
+﻿@model CoreAndFood.Models.AddProduct
+
+<h2>Food Add Page</h2>
+<br />
+
+<form asp-controller="Food" asp-action="AddFood" method="post" enctype="multipart/form-data">
+
+    <label>Food Name</label>
+    <br />
+    <input class="form-control" asp-for="Name"/>
+    <br />
+
+    <label>Stock Count</label>
+    <br />
+    <input class="form-control" asp-for="Stock" />
+    <br />
+
+    <label>Food Price</label>
+    <br />
+    <input class="form-control" asp-for="Price" />
+    <br />
+
+    <label>Choose Image</label>
+    <br />
+    <input type="file" class="form-control" asp-for="ImageUrl" />
+    <br />
+
+    @*@Html.Label("Category")
+    @Html.DropDownListFor(x => x.CategoryId,(List<SelectListItem>)ViewBag.values1, new {
+        @class = "form-control"
+    })*@
+
+    <label>Category</label>
+    <br />
+    <select class="form-control" asp-for="CategoryId" asp-items="@ViewBag.values1">
+        <option selected>Choose Category</option>
+        <span asp-validation-for="CategoryId"></span>
+    </select>
+
+
+    <div class="form-group">
+        <label>Food Description</label>
+        <textarea class="form-control" rows="3" asp-for="Description"></textarea>
+    </div>
+
+
+    <button class="btn btn-primary">Add Food</button>
+</form>

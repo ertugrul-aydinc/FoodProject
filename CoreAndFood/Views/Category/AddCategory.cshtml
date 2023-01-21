@@ -1,0 +1,20 @@
+﻿@model CoreAndFood.Models.Category
+
+<h2>Category Add Page</h2>
+<br />
+
+<form asp-controller="Category" asp-action="AddCategory" method="post">
+
+    <label>Category Name</label>
+    <br />
+    <input class="form-control" asp-for="CategoryName"/>
+    <span asp-validation-for="CategoryName"></span>
+    <br />
+
+    <label>Category Description</label>
+    <br />
+    <input class="form-control" asp-for="CategoryDescription" />
+    <span asp-validation-for="CategoryDescription"></span>
+    <br />
+    <button class="btn btn-primary">Add Category</button>
+</form>

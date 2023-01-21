@@ -1,0 +1,36 @@
+﻿@model List<CoreAndFood.Models.Category>
+
+<h2>Category List</h2>
+<br />
+
+@using (Html.BeginForm())
+{
+    <p>
+        Food Name: @Html.TextBox("p")
+        <input type="submit" value="Find" class="btn btn-info">
+    </p>
+}
+
+<table class="table table-bordered">
+    <tr>
+        <th>ID</th>
+        <th>Category Name</th>
+        <th>Status</th>
+        <th>Delete</th>
+        <th>Edit</th>
+    </tr>
+    
+        @foreach (var cat in Model)
+        {
+            <tr>
+                <td>@cat.Id</td>
+                <td>@cat.CategoryName</td>
+                <td>@cat.Status</td>
+                <td><a href="/category/categorydelete/@cat.Id" class="btn btn-danger">Delete</a></td>
+                <td><a href="/category/getcategory/@cat.Id" class="btn btn-info">Edit</a></td>
+            </tr>
+        }
+    
+</table>
+
+<a href="/category/addcategory" class="btn btn-primary">New Category</a> 

@@ -1,0 +1,43 @@
+﻿@model CoreAndFood.Models.Food
+
+<h2>Food Edit Page</h2>
+<br />
+
+<form asp-controller="Food" asp-action="EditFood" method="post">
+
+    <input type="hidden" asp-for="Id"/>
+
+    <label>Food Name</label>
+    <br />
+    <input class="form-control" asp-for="Name"/>
+    <br />
+
+    <label>Stock Count</label>
+    <br />
+    <input class="form-control" asp-for="Stock" />
+    <br />
+
+    <label>Food Price</label>
+    <br />
+    <input class="form-control" asp-for="Price" />
+    <br />
+
+    <label>Image Url</label>
+    <br />
+    <input class="form-control" asp-for="ImageUrl" />
+    <br />
+
+    @Html.Label("Category")
+@*    <input class="form-control" asp-for="CategoryId" />*@
+    @Html.DropDownListFor(x => x.CategoryId,(List<SelectListItem>)ViewBag.values1, new {
+        @class = "form-control"
+    })
+
+    <div class="form-group">
+        <label>Food Description</label>
+        <textarea class="form-control" rows="3" asp-for="Description"></textarea>
+    </div>
+
+
+    <button class="btn btn-primary">Edit Food</button>
+</form>

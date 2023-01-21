@@ -1,0 +1,30 @@
+﻿@model CoreAndFood.Models.Category
+
+<h2>Category Edit Page</h2>
+<br />
+
+<form asp-controller="Category" asp-action="EditCategory" method="post">
+
+    <input type="hidden"  asp-for="Id"/>
+
+    <label>Category Name</label>
+    <br />
+    <input class="form-control" asp-for="CategoryName" />
+    <span asp-validation-for="CategoryName"></span>
+    <br />
+
+    <label>Category Description</label>
+    <br />
+    <input class="form-control" asp-for="CategoryDescription" />
+    <span asp-validation-for="CategoryDescription"></span>
+    <br />
+
+    <label>Category Status</label>
+    <br />
+    <select class="form-control" asp-for="Status">
+        <option value="true">True</option>
+        <option value="false">False</option>
+    </select>
+    <br />
+    <button class="btn btn-warning">Update Category</button>
+</form>
