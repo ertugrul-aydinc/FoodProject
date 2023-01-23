@@ -1,11 +1,19 @@
 ﻿using CoreAndFood.Contexts;
 using CoreAndFood.Models.Charts;
+using CoreAndFood.Repositories.Abstract;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreAndFood.Controllers
 {
     public class ChartController : Controller
     {
+        IFoodRepository _foodRepository;
+
+        public ChartController(IFoodRepository foodRepository)
+        {
+            _foodRepository = foodRepository;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -28,22 +36,34 @@ namespace CoreAndFood.Controllers
 
         public List<Class1> ProList()
         {
+            var foodList = _foodRepository.GetAll();
+
             List<Class1> cs = new List<Class1>();
-            cs.Add(new Class1()
+
+            foreach (var food in foodList)
             {
-                proname = "Computer",
-                stock = 150
-            });
-            cs.Add(new Class1()
-            {
-                proname = "LCD",
-                stock = 75
-            });
-            cs.Add(new Class1()
-            {
-                proname = "USB Disk",
-                stock = 220
-            });
+                cs.Add(new Class1()
+                {
+                    proname= food.Name,
+                    stock = food.Stock
+                });
+            }
+
+            //cs.Add(new Class1()
+            //{
+            //    proname = "Computer",
+            //    stock = 150
+            //});
+            //cs.Add(new Class1()
+            //{
+            //    proname = "LCD",
+            //    stock = 75
+            //});
+            //cs.Add(new Class1()
+            //{
+            //    proname = "USB Disk",
+            //    stock = 220
+            //});
 
             return cs;
         }

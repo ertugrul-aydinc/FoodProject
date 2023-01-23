@@ -1,27 +1,30 @@
 ﻿using CoreAndFood.Contexts;
+using CoreAndFood.CQRS.Commands.Food.AddFood;
+using CoreAndFood.CQRS.Commands.Food.EditFood;
 using CoreAndFood.Models;
 using CoreAndFood.Repositories;
 using CoreAndFood.Repositories.Abstract;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using X.PagedList;
 
 namespace CoreAndFood.Controllers
 {
-	public class FoodController : Controller
+    public class FoodController : Controller
 	{
 		IFoodRepository _foodRepository;
+		IMediator _mediator;
 		Context c = new Context();
 
-        public FoodController(IFoodRepository foodRepository)
+        public FoodController(IFoodRepository foodRepository, IMediator mediator)
         {
             _foodRepository = foodRepository;
+			_mediator = mediator;
         }
 
         public IActionResult Index(int page = 1)
 		{
-			
-
 			return View(_foodRepository.GetFoodWithCategory().ToPagedList(page,8));
 		}
 		
@@ -40,34 +43,17 @@ namespace CoreAndFood.Controllers
 		}
 
 		[HttpPost]
-        public IActionResult AddFood(AddProduct food)
+        public IActionResult AddFood(AddFoodCommandRequest addFoodCommandRequest)
         {
-			Food f = new Food();
-
-			if(food.ImageUrl!= null)
-			{
-				var extension = Path.GetExtension(food.ImageUrl.FileName);
-				var newImageName = Guid.NewGuid() + extension;
-				var location = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot/resimler/",newImageName);
-				var stream = new FileStream(location, FileMode.Create);
-				food.ImageUrl.CopyTo(stream);
-				f.ImageUrl = newImageName;
-			}
-
-			f.Name = food.Name;
-			f.Description = food.Description;
-			f.Price= food.Price;
-			f.Stock= food.Stock;
-			f.CategoryId= food.CategoryId;
-
-			_foodRepository.Add(f);
-
+			_mediator.Send(addFoodCommandRequest);
             return RedirectToAction("Index");
         }
 
-		public IActionResult DeleteFood(int id)
+
+		public IActionResult DeleteFood(DeleteFoodCommandRequest deleteFoodCommandRequest)
 		{
-			_foodRepository.DeleteById(id);
+			_mediator.Send(deleteFoodCommandRequest);
+			//_foodRepository.DeleteById(id);
 
 			return RedirectToAction("Index");
 		}
@@ -100,21 +86,10 @@ namespace CoreAndFood.Controllers
 			return View(newFood);
 		}
 
-		public IActionResult EditFood(Food food)
+		public IActionResult EditFood(EditFoodCommandRequest editFoodCommandRequest)
 		{
-			var updatedFood = _foodRepository.Get(food.Id);
-
-			updatedFood.Name= food.Name;
-			updatedFood.Stock= food.Stock;
-			updatedFood.Price= food.Price;
-			updatedFood.ImageUrl = food.ImageUrl;
-			updatedFood.Description = food.Description;
-			updatedFood.CategoryId= food.CategoryId;
-
-			_foodRepository.Update(updatedFood);
-
+			_mediator.Send(editFoodCommandRequest);
 			return RedirectToAction("Index");
-
 		}
     }
 }

@@ -1,5 +1,6 @@
 ﻿using CoreAndFood.Repositories;
 using CoreAndFood.Repositories.Abstract;
+using MediatR;
 
 namespace CoreAndFood.Extensions
 {
@@ -9,6 +10,7 @@ namespace CoreAndFood.Extensions
         {
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IFoodRepository, FoodRepository>();
+            services.AddMediatR(typeof(Program));
         }
     }
 }

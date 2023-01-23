@@ -2,6 +2,7 @@
 using CoreAndFood.Models.ViewModels;
 using CoreAndFood.Repositories;
 using CoreAndFood.Repositories.Abstract;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,11 +12,13 @@ namespace CoreAndFood.Controllers
 	{
 		readonly ICategoryRepository _categoryRepository;
 		readonly IFoodRepository _foodRepository;
+		readonly IMediator _mediator;
 
-        public CategoryController(ICategoryRepository categoryRepository, IFoodRepository foodRepository)
+        public CategoryController(ICategoryRepository categoryRepository, IFoodRepository foodRepository,IMediator mediator)
         {
             _categoryRepository = categoryRepository;
             _foodRepository = foodRepository;
+			_mediator = mediator;
         }
 
         public IActionResult Index(string p)
